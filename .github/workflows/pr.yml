@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   lint:
     uses: jacaudi/github-actions/.github/workflows/lint.yml@main
@@ -17,6 +21,3 @@ jobs:
     with:
       platforms: linux/amd64
       push: false
-    permissions:
-      contents: read
-      packages: write
