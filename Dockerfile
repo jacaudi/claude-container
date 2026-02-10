@@ -1,7 +1,7 @@
 FROM public.ecr.aws/docker/library/alpine:3.23
 
 # --- Pinned versions ---
-ARG CLAUDE_CODE_VERSION=2.1.33
+ARG CLAUDE_CODE_VERSION=2.1.38
 
 # --- System packages ---
 RUN apk add --no-cache \
