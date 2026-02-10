@@ -12,7 +12,7 @@ SSH is hardened:
 - Public key authentication only
 - Password and keyboard-interactive authentication disabled
 - Root login disabled
-- Only `dev` user allowed
+- Only `coder` user allowed
 
 ## Claude Code Authentication
 
@@ -22,14 +22,14 @@ Pass your OAuth token as an environment variable:
 -e CLAUDE_OAUTH_TOKEN="your-token"
 ```
 
-The token is written to `/home/dev/.zshenv` with `600` permissions so it's available in SSH sessions.
+The token is written to `/home/coder/.zshenv` with `600` permissions so it's available in SSH sessions.
 
 ## User Setup
 
-- **Username:** `dev` (UID 1000)
+- **Username:** `coder` (UID 1000)
 - **Shell:** zsh with oh-my-zsh
 - **Sudo:** passwordless via wheel group
-- **Home:** `/home/dev`
+- **Home:** `/home/coder`
 
 ## Persistent Host Keys
 

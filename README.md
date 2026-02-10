@@ -1,4 +1,4 @@
-# claude-container
+# codeforge
 
 Remote development container with [Claude Code](https://claude.com/product/claude-code) pre-installed. Multi-arch (amd64 + arm64), SSH-ready.
 
@@ -12,7 +12,7 @@ Remote development container with [Claude Code](https://claude.com/product/claud
 - **Editors** neovim, nano
 - **Git tooling** git, GitHub CLI, GitLab CLI
 - **Data tools** jq, yq
-- **Non-root** `dev` user with passwordless sudo
+- **Non-root** `coder` user with passwordless sudo
 
 ## Quick Start
 
@@ -21,15 +21,15 @@ docker run -d \
   -p 2222:22 \
   -e CLAUDE_OAUTH_TOKEN="your-token" \
   -v ~/.ssh/id_ed25519.pub:/etc/ssh-keys/authorized_keys:ro \
-  ghcr.io/jacaudi/claude-container:latest
+  ghcr.io/jacaudi/codeforge:latest
 
-ssh -p 2222 dev@localhost
+ssh -p 2222 coder@localhost
 ```
 
 Or access without SSH:
 
 ```bash
-docker exec -it -u dev <container> zsh
+docker exec -it -u coder <container> zsh
 ```
 
 ## Configuration

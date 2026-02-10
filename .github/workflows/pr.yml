@@ -44,9 +44,9 @@ jobs:
         yq --version &&
         jq --version &&
         chezmoi --version &&
-        id dev &&
-        getent passwd dev | grep zsh &&
+        id coder &&
+        getent passwd coder | grep zsh &&
         grep 'PubkeyAuthentication yes' /etc/ssh/sshd_config &&
         grep 'PasswordAuthentication no' /etc/ssh/sshd_config &&
         grep 'PermitRootLogin no' /etc/ssh/sshd_config &&
-        grep 'AllowUsers dev' /etc/ssh/sshd_config
+        grep 'AllowUsers coder' /etc/ssh/sshd_config

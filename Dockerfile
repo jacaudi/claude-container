@@ -25,17 +25,17 @@ RUN apk add --no-cache \
         yq \
         jq
 
-# --- Create dev user ---
-RUN addgroup dev \
-    && adduser -D -s /bin/zsh -G dev dev \
-    && addgroup dev wheel \
-    && sed -i 's/^dev:!/dev:*/' /etc/shadow \
+# --- Create coder user ---
+RUN addgroup coder \
+    && adduser -D -s /bin/zsh -G coder coder \
+    && addgroup coder wheel \
+    && sed -i 's/^coder:!/coder:*/' /etc/shadow \
     && echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 # --- oh-my-zsh ---
-RUN git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git /home/dev/.oh-my-zsh \
-    && cp /home/dev/.oh-my-zsh/templates/zshrc.zsh-template /home/dev/.zshrc \
-    && chown -R dev:dev /home/dev/.oh-my-zsh /home/dev/.zshrc
+RUN git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git /home/coder/.oh-my-zsh \
+    && cp /home/coder/.oh-my-zsh/templates/zshrc.zsh-template /home/coder/.zshrc \
+    && chown -R coder:coder /home/coder/.oh-my-zsh /home/coder/.zshrc
 
 # --- Claude Code (direct binary, pinned version, musl for Alpine) ---
 ARG TARGETARCH
@@ -50,9 +50,9 @@ RUN case "${TARGETARCH}" in \
     && chmod +x /usr/local/bin/claude
 
 # --- SSH configuration ---
-RUN mkdir -p /home/dev/.ssh \
-    && chmod 700 /home/dev/.ssh \
-    && chown dev:dev /home/dev/.ssh
+RUN mkdir -p /home/coder/.ssh \
+    && chmod 700 /home/coder/.ssh \
+    && chown coder:coder /home/coder/.ssh
 
 RUN sed -i \
         -e 's/^#PubkeyAuthentication yes/PubkeyAuthentication yes/' \
@@ -60,7 +60,7 @@ RUN sed -i \
         -e 's/^#PermitRootLogin .*/PermitRootLogin no/' \
         -e 's/^#KbdInteractiveAuthentication yes/KbdInteractiveAuthentication no/' \
         /etc/ssh/sshd_config \
-    && echo 'AllowUsers dev' >> /etc/ssh/sshd_config \
+    && echo 'AllowUsers coder' >> /etc/ssh/sshd_config \
     && echo 'AuthenticationMethods publickey' >> /etc/ssh/sshd_config
 
 # --- Entrypoint ---
