@@ -1,0 +1,22 @@
+name: PR
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    uses: jacaudi/github-actions/.github/workflows/lint.yml@main
+    with:
+      shell: true
+      shellcheck-paths: '.'
+
+  build:
+    needs: [lint]
+    uses: jacaudi/github-actions/.github/workflows/docker-build.yml@main
+    with:
+      platforms: linux/amd64
+      push: false
+    permissions:
+      contents: read
+      packages: write

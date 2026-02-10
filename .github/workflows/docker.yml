@@ -1,0 +1,15 @@
+name: Docker
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  build:
+    uses: jacaudi/github-actions/.github/workflows/docker-build.yml@main
+    with:
+      platforms: linux/amd64
+      version: ${{ github.ref_name }}
+    permissions:
+      contents: read
+      packages: write

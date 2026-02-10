@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    uses: jacaudi/github-actions/.github/workflows/lint.yml@main
+    with:
+      shell: true
+      shellcheck-paths: '.'
+
+  release:
+    needs: [lint]
+    uses: jacaudi/github-actions/.github/workflows/semantic-release.yml@main
+    with:
+      allow-initial-development-versions: true
+      use-github-app: true
+    secrets:
+      app-id: ${{ secrets.APP_ID }}
+      app-private-key: ${{ secrets.APP_PRIVATE_KEY }}
