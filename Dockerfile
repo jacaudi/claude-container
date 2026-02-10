@@ -13,7 +13,9 @@ RUN apk add --no-cache \
         curl \
         sudo \
         bash \
-        shadow
+        shadow \
+        libgcc \
+        libstdc++
 
 # --- CLI tools ---
 RUN apk add --no-cache \
