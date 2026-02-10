@@ -37,8 +37,15 @@ RUN git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git /home/dev/.oh-my-
     && chown -R dev:dev /home/dev/.oh-my-zsh /home/dev/.zshrc
 
 # --- Claude Code (direct binary, pinned version, musl for Alpine) ---
-ARG CLAUDE_CODE_URL=https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/${CLAUDE_CODE_VERSION}/linux-x64-musl/claude
-RUN curl -fsSL --retry 3 --retry-delay 5 "${CLAUDE_CODE_URL}" -o /usr/local/bin/claude \
+ARG TARGETARCH
+RUN case "${TARGETARCH}" in \
+        amd64) ARCH_PATH="linux-x64-musl" ;; \
+        arm64) ARCH_PATH="linux-arm64-musl" ;; \
+        *) echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
+    esac \
+    && curl -fsSL --retry 3 --retry-delay 5 \
+        "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/${CLAUDE_CODE_VERSION}/${ARCH_PATH}/claude" \
+        -o /usr/local/bin/claude \
     && chmod +x /usr/local/bin/claude
 
 # --- SSH configuration ---
