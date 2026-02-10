@@ -19,7 +19,6 @@ jobs:
   build:
     needs: [lint]
     uses: jacaudi/github-actions/.github/workflows/docker-build.yml@main
-    with:
 
   scan:
     needs: [build]
