@@ -92,7 +92,10 @@ RUN printf '%s\n' \
     '  ╚██████╗╚██████╔╝██████╔╝███████╗██║     ╚██████╔╝██║  ██║╚██████╔╝███████╗' \
     '   ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝' \
     '' \
-    '  Remote development container with Claude Code' \
+    '  Remote development container' \
+    "  Claude Code ${CLAUDE_CODE_VERSION}" \
+    '' \
+    '  tmux: Ctrl-b d detach | Ctrl-b c new window | Ctrl-b n/p next/prev window' \
     '' > /etc/motd
 
 # --- Entrypoint ---
