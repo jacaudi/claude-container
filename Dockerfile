@@ -1,5 +1,7 @@
 FROM public.ecr.aws/docker/library/alpine:3.23 AS go-builder
+# renovate: datasource=github-releases depName=marcus/nightshift
 ARG NIGHTSHIFT_VERSION=0.3.1
+# renovate: datasource=github-releases depName=marcus/td
 ARG TD_VERSION=0.34.0
 RUN apk add --no-cache go
 RUN GOBIN=/go/bin go install github.com/marcus/nightshift/cmd/nightshift@v${NIGHTSHIFT_VERSION}
@@ -8,8 +10,11 @@ RUN GOBIN=/go/bin go install github.com/marcus/td@v${TD_VERSION}
 FROM public.ecr.aws/docker/library/alpine:3.23
 
 # --- Pinned versions ---
+# renovate: datasource=npm depName=@anthropic-ai/claude-code
 ARG CLAUDE_CODE_VERSION=2.1.39
+# renovate: datasource=github-releases depName=marcus/nightshift
 ARG NIGHTSHIFT_VERSION=0.3.1
+# renovate: datasource=github-releases depName=marcus/td
 ARG TD_VERSION=0.34.0
 
 # --- System packages ---
