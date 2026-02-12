@@ -1,4 +1,4 @@
-# claude-container - Detailed Documentation
+# codeforge - Detailed Documentation
 
 ## SSH Keys
 
@@ -19,7 +19,7 @@ SSH is hardened:
 Pass your OAuth token as an environment variable:
 
 ```bash
--e CLAUDE_OAUTH_TOKEN="your-token"
+-e CLAUDE_CODE_OAUTH_TOKEN="your-token"
 ```
 
 The token is written to `/home/coder/.zshenv` with `600` permissions so it's available in SSH sessions.
@@ -31,24 +31,32 @@ The token is written to `/home/coder/.zshenv` with `600` permissions so it's ava
 - **Sudo:** passwordless via wheel group
 - **Home:** `/home/coder`
 
-## Persistent Host Keys
+## Persistent Volumes
 
-Mount a volume to `/etc/ssh` to persist SSH host keys across container restarts:
+Mount volumes to persist data across container restarts:
 
 ```bash
 -v ssh-host-keys:/etc/ssh
+-v coder-home:/home/coder
 ```
+
+When a volume is mounted empty, the entrypoint automatically restores default files:
+
+- `/etc/ssh`: Restores hardened `sshd_config` and generates host keys
+- `/home/coder`: Restores `.ssh/` directory, oh-my-zsh, and `.zshrc`
+
+Existing data on subsequent restarts is preserved.
 
 ## Building Locally
 
 ```bash
-docker build -t claude-container .
+docker build -t codeforge .
 ```
 
 Override the Claude Code version at build time:
 
 ```bash
-docker build --build-arg CLAUDE_CODE_VERSION=2.1.38 -t claude-container .
+docker build --build-arg CLAUDE_CODE_VERSION=2.1.38 -t codeforge .
 ```
 
 ## Architecture

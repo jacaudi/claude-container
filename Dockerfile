@@ -74,6 +74,24 @@ RUN sed -i \
     && echo 'AllowUsers coder' >> /etc/ssh/sshd_config \
     && echo 'AuthenticationMethods publickey' >> /etc/ssh/sshd_config
 
+# --- Backup defaults for volume mount initialization ---
+RUN mkdir -p /opt/codeforge/defaults/etc/ssh \
+    && cp /etc/ssh/sshd_config /opt/codeforge/defaults/etc/ssh/sshd_config \
+    && cp -a /home/coder /opt/codeforge/defaults/home-coder
+
+# --- MOTD ---
+RUN printf '%s\n' \
+    '' \
+    '   ██████╗ ██████╗ ██████╗ ███████╗███████╗ ██████╗ ██████╗  ██████╗ ███████╗' \
+    '  ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝ ██╔════╝' \
+    '  ██║     ██║   ██║██║  ██║█████╗  █████╗  ██║   ██║██████╔╝██║  ███╗█████╗  ' \
+    '  ██║     ██║   ██║██║  ██║██╔══╝  ██╔══╝  ██║   ██║██╔══██╗██║   ██║██╔══╝  ' \
+    '  ╚██████╗╚██████╔╝██████╔╝███████╗██║     ╚██████╔╝██║  ██║╚██████╔╝███████╗' \
+    '   ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝' \
+    '' \
+    '  Remote development container with Claude Code' \
+    '' > /etc/motd
+
 # --- Entrypoint ---
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

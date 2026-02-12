@@ -1,4 +1,4 @@
-docs/plans/**/*
+docs/plans/
 
 .env
 *.pem

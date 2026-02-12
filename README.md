@@ -23,7 +23,7 @@ Remote development container with [Claude Code](https://claude.com/product/claud
 ```bash
 docker run -d \
   -p 2222:22 \
-  -e CLAUDE_OAUTH_TOKEN="your-token" \
+  -e CLAUDE_CODE_OAUTH_TOKEN="your-token" \
   -v ~/.ssh/id_ed25519.pub:/etc/ssh-keys/authorized_keys:ro \
   ghcr.io/jacaudi/codeforge:latest
 
@@ -40,12 +40,13 @@ docker exec -it -u coder <container> zsh
 
 | Variable | Purpose |
 |----------|---------|
-| `CLAUDE_OAUTH_TOKEN` | Claude Code authentication |
+| `CLAUDE_CODE_OAUTH_TOKEN` | Claude Code authentication |
 
 | Volume Mount | Purpose |
 |-------------|---------|
 | `/etc/ssh-keys/authorized_keys` | SSH public key (required for SSH access) |
-| `/etc/ssh` | Persist host keys across restarts |
+| `/etc/ssh` | Persist host keys and SSH config across restarts |
+| `/home/coder` | Persist home directory across restarts |
 
 ## Dotfiles
 
