@@ -74,6 +74,9 @@ RUN sed -i \
     && echo 'AllowUsers coder' >> /etc/ssh/sshd_config \
     && echo 'AuthenticationMethods publickey' >> /etc/ssh/sshd_config
 
+# --- tmux auto-attach on SSH login ---
+COPY zlogin /etc/zsh/zlogin
+
 # --- Backup defaults for volume mount initialization ---
 RUN mkdir -p /opt/codeforge/defaults/etc/ssh \
     && cp /etc/ssh/sshd_config /opt/codeforge/defaults/etc/ssh/sshd_config \
